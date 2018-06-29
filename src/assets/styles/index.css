@@ -1,0 +1,9 @@
+@import 'bootstrap.min.css';
+
+:root {
+  --white: #fff;
+}
+
+#app {
+  /*color: red !important;*/
+}
