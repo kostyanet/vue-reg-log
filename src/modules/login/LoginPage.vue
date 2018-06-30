@@ -1,5 +1,5 @@
 <script>
-import {CLEAR_AUTH_DATA, SUBMIT_LOGIN} from '../../store/modules/action.types';
+import {CLEAR_AUTH_DATA, CLEAR_ERROR_MESSAGE, SUBMIT_LOGIN} from '../../store/modules/action.types';
 
 export default {
   name: 'LoginPage',
@@ -8,19 +8,32 @@ export default {
   },
   data() {
     return {
-      errorMessage: null,
       isLoading: false,
+      keepLogged: false,
+      login: '',
+      password: '',
     };
+  },
+  computed: {
+    errorMessage() {
+      return this.$store.state.login.errorMessage;
+    }
   },
   methods: {
     onSubmit() {
-      this.$store.dispatch(`login/${SUBMIT_LOGIN}`, {});
+      this.$store.dispatch(`login/${SUBMIT_LOGIN}`, {
+        login: this.login,
+        password: this.password,
+      }, this.keepLogged);
+    },
+    clearError() {
+      this.$store.dispatch(`login/${CLEAR_ERROR_MESSAGE}`);
     }
   }
 };
 </script>
 
-<template src='./LoginPage.html' />
+<template src='./LoginPage.html'></template>
 
 <style lang='scss' scoped>
   .LoginPage {

@@ -1,6 +1,7 @@
 import apiService from '@/services/api.service';
 import AuthDataService from '../../services/auth-data.service';
-import {CLEAR_AUTH_DATA, SUBMIT_LOGIN} from './action.types';
+import router from '../../router';
+import {CLEAR_AUTH_DATA, CLEAR_ERROR_MESSAGE, SUBMIT_LOGIN} from './action.types';
 
 const state = {
   isPending: false,
@@ -12,13 +13,18 @@ const actions = {
     AuthDataService.clearAuthData();
   },
 
-  [SUBMIT_LOGIN]({ commit }, data) {
+  [CLEAR_ERROR_MESSAGE]({ commit }) {
+    commit('clearErrorMessage');
+  },
+
+  [SUBMIT_LOGIN]({ commit }, data, keepLogged) {
     commit('loginPending');
 
     return apiService.post({ query: '/users/login', data })
       .then((response) => {
         commit('loginPending', false);
-        AuthDataService.clearAuthData();
+        router.push({ name: 'ProtectedPage' });
+        AuthDataService.saveAuthData(response, keepLogged);
       })
       .catch((error) => {
         commit('loginPending', false);
@@ -28,6 +34,10 @@ const actions = {
 };
 
 const mutations = {
+  clearErrorMessage(state) {
+    state.errorMessage = '';
+  },
+
   loginPending(state, isPending = true) {
     state.isPending = isPending;
   },
@@ -36,8 +46,8 @@ const mutations = {
   //
   // },
 
-  loginFailure(state, errorMessage) {
-    state.errorMessage = errorMessage;
+  loginFailure(state, error) {
+    state.errorMessage = error.message;
   }
 };
 

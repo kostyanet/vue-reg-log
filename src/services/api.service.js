@@ -1,10 +1,15 @@
+import axios from 'axios';
 import AuthDataService from './auth-data.service';
-import ApiConfig from './api.config';
+import {API_KEY, API_URL, APPLICATION_ID} from '../misc/app.config';
 
 class ApiService {
 
-  constructor(Axios) {
-    this.api = new Axios().instance;
+  constructor() {
+    this.api = axios.create({
+      baseURL: [API_URL, APPLICATION_ID, API_KEY].join('/')
+    });
+
+    this._config();
   }
 
   get(params) {
@@ -30,6 +35,7 @@ class ApiService {
       url: query,
       data: data ? JSON.stringify(data) : null,
       headers: {
+        'Content-Type': 'application/json',
         'user-token': AuthDataService.token || null
       }
     })
@@ -50,6 +56,26 @@ class ApiService {
     throw new Error(res.data.message);
   };
 
+
+  _config() {
+    this.api.interceptors.request.use(function(config) {
+      if (config.data instanceof FormData) {
+        config.headers = Object.assign(config.headers, { 'Content-Type': 'application/json' });
+      }
+
+      return config;
+    }, null);
+
+    this.api.interceptors.response.use(null, function(error) {
+      if (error && error.response && error.response.status === 401) {
+        // unauthorized
+        // todo
+      }
+
+      return Promise.reject(error);
+    });
+  }
+
 }
 
-export default new ApiService(ApiConfig);
+export default new ApiService();
