@@ -1,10 +1,11 @@
-import Vue from 'vue';
-import VueResource from 'vue-resource';
-
-Vue.use(VueResource);
-Vue.http.options.root = '/root';
+import AuthDataService from './auth-data.service';
+import ApiConfig from './api.config';
 
 class ApiService {
+
+  constructor(Axios) {
+    this.api = new Axios().instance;
+  }
 
   get(params) {
     return this._http({ method: 'get', ...params });
@@ -24,19 +25,19 @@ class ApiService {
 
 
   _http({ method, query, data }) {
-    const body = data ? JSON.stringify(data) : null;
-
     return this.api({
       method,
       url: query,
-      data: body
+      data: data ? JSON.stringify(data) : null,
+      headers: {
+        'user-token': AuthDataService.token || null
+      }
     })
       .catch(this._handleError);
   }
 
 
   _handleError = (err) => {
-    debugger
     // if parsing error
     if (!err.response) {
       window.console.error(err.stack);
@@ -51,4 +52,4 @@ class ApiService {
 
 }
 
-export default new ApiService();
+export default new ApiService(ApiConfig);

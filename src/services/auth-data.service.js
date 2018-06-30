@@ -1,13 +1,13 @@
 export default class AuthDataService {
 
   static get token() {
-    let token;
+    let token = '';
 
     try {
-      token = JSON.parse(localStorage.getItem('authData') || sessionStorage.getItem('authData'))['access_token'];
+      const tokenStr = localStorage.getItem('authData') || sessionStorage.getItem('authData');
+      token = tokenStr && JSON.parse()['access_token'];
     } catch (e) {
       console.error('Token parser', e);
-      token = '';
     }
     return token;
   }
