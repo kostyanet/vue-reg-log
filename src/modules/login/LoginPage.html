@@ -1,0 +1,39 @@
+<div class="LoginPage">
+  <h2 class="mb-4">Login</h2>
+
+  <div v-if="errorMessage" class="alert alert-danger" role="alert">{{errorMessage}}</div>
+
+  <form class="LoginPage__form" @submit.prevent="onSubmit">
+    <div class="input-group mb-3">
+      <input type="text" name="email" placeholder="Username" class="form-control" />
+      <div class="input-group-append">
+          <span class="input-group-text LoginForm__label">
+            <icon name="user"></icon>
+          </span>
+      </div>
+    </div>
+
+    <div class="input-group mb-3">
+      <input type="password" name="email" placeholder="Password" class="form-control" />
+      <div class="input-group-append">
+          <span class="input-group-text LoginForm__label">
+            <icon name="lock"></icon>
+          </span>
+      </div>
+    </div>
+
+    <div class="form-group mb-4">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="checkbox">
+        <label class="custom-control-label" for="checkbox">Keep me logged in</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-primary btn-block" :disabled="isLoading">
+        <span v-if="!isLoading">Login</span>
+        <icon v-if="isLoading" name="spinner"></icon>
+      </button>
+    </div>
+  </form>
+</div>

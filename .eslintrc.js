@@ -28,5 +28,11 @@ module.exports = {
     'semi': [1, 'always'],
     'comma-dangle': 0,
     'no-multiple-empty-lines': 0,
+    'space-before-function-paren': ["error", {
+      "anonymous": "never",
+      "named": "never",
+      "asyncArrow": "always"
+    }],
+    'padded-blocks': 0
   }
 };

@@ -4,6 +4,13 @@
   --white: #fff;
 }
 
+body,
+html {
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--white);
+}
+
 #app {
   /*color: red !important;*/
 }

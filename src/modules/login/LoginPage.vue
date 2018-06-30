@@ -1,13 +1,28 @@
-<template>
-  <h2>Login Page</h2>
-</template>
-
 <script>
 export default {
-  name: 'LoginPage'
+  name: 'LoginPage',
+  data() {
+    return {
+      errorMessage: null,
+      isLoading: false,
+    };
+  }
 };
 </script>
 
-<style scoped>
+<template src="./LoginPage.html" />
 
+<style lang="scss" scoped>
+  .LoginPage {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__form {
+      min-width: 300px;
+      width: 350px;
+    }
+  }
 </style>
