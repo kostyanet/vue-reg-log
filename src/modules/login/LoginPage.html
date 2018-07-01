@@ -5,7 +5,7 @@
 
   <form class="LoginPage__form" @submit.prevent="onSubmit">
     <div class="input-group mb-3">
-      <input v-model="login" @keyup="clearError" type="text" name="email" placeholder="Username" class="form-control" />
+      <input v-model="login" @keyup="clearError" type="text" name="login" placeholder="Username" class="form-control" />
       <div class="input-group-append">
           <span class="input-group-text LoginForm__label">
             <icon name="user"></icon>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="input-group mb-3">
-      <input v-model="password" @keyup="clearError" type="password" name="email" placeholder="Password" class="form-control" />
+      <input v-model="password" @keyup="clearError" type="password" name="password" placeholder="Password" class="form-control" />
       <div class="input-group-append">
           <span class="input-group-text LoginForm__label">
             <icon name="lock"></icon>
@@ -32,8 +32,10 @@
     <div class="form-group">
       <button class="btn btn-primary btn-block" :disabled="isLoading" type="submit">
         <span v-if="!isLoading">Login</span>
-        <icon v-if="isLoading" name="spinner"></icon>
+        <icon v-if="isLoading" name="spinner" spin></icon>
       </button>
     </div>
   </form>
+
+  <router-link to="/register" class="nav-item nav-link Header__link" active-class="active">Don't have an account?</router-link>
 </div>

@@ -1,5 +1,5 @@
 <script>
-import {CLEAR_AUTH_DATA, CLEAR_ERROR_MESSAGE, SUBMIT_LOGIN} from '../../store/modules/action.types';
+import {CLEAR_AUTH_DATA, CLEAR_ERROR_MESSAGE, SUBMIT_LOGIN} from '../../store/modules/login/action.types';
 
 export default {
   name: 'LoginPage',
@@ -8,7 +8,6 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
       keepLogged: false,
       login: '',
       password: '',
@@ -17,6 +16,9 @@ export default {
   computed: {
     errorMessage() {
       return this.$store.state.login.errorMessage;
+    },
+    isLoading() {
+      return this.$store.state.login.isPending;
     }
   },
   methods: {

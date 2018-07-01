@@ -1,0 +1,72 @@
+<div class="RegisterPage">
+  <h2 class="mb-4">Sign in</h2>
+
+  <div v-if="errorMessage" class="alert alert-danger" role="alert">{{errorMessage}}</div>
+
+  <form class="RegisterPage__form" @submit.prevent="onSubmit">
+<!--EMAIL-->
+    <div class="mb-3">
+      <div class="input-group">
+        <input v-model="email" @keyup="clearErrors" type="email" name="email" placeholder="Email" class="form-control" />
+        <div class="input-group-append">
+          <span class="input-group-text RegisterForm__label">
+            <icon name="envelope"></icon>
+          </span>
+        </div>
+      </div>
+
+      <div v-show="errors.has('email')" class="small RegisterForm__error">{{ errors.first('email') }}</div>
+    </div>
+
+<!--LOGIN-->
+    <div class="mb-3">
+      <div class="input-group">
+        <input v-model="login" @keyup="clearErrors" type="text" name="login" placeholder="Username" class="form-control" />
+        <div class="input-group-append">
+          <span class="input-group-text RegisterForm__label">
+            <icon name="user"></icon>
+          </span>
+        </div>
+      </div>
+
+      <div v-show="errors.has('login')" class="small RegisterForm__error">{{ errors.first('login') }}</div>
+    </div>
+
+<!--PASSWORD-->
+    <div class="mb-3">
+      <div class="input-group">
+        <input v-model="password" @keyup="clearErrors" type="password" name="password" placeholder="Password" class="form-control" />
+        <div class="input-group-append">
+          <span class="input-group-text RegisterForm__label">
+            <icon name="lock"></icon>
+          </span>
+        </div>
+      </div>
+
+      <div v-show="errors.has('password')" class="small RegisterForm__error">{{ errors.first('password') }}</div>
+    </div>
+
+<!--PASSWORD2-->
+    <div class="mb-3">
+      <div class="input-group">
+        <input v-model="password2" @keyup="clearErrors" type="password" name="password2" placeholder="Repeat Password" class="form-control" />
+        <div class="input-group-append">
+          <span class="input-group-text RegisterForm__label">
+            <icon name="lock"></icon>
+          </span>
+        </div>
+      </div>
+      <div v-show="errors.has('password2')" class="small RegisterForm__error">{{ errors.first('password2') }}</div>
+    </div>
+
+<!--BUTTON-->
+    <div class="form-group">
+      <button class="btn btn-primary btn-block" :disabled="isLoading" type="submit">
+        <span v-if="!isLoading">Register</span>
+        <icon v-if="isLoading" name="spinner" spin></icon>
+      </button>
+    </div>
+  </form>
+
+  <router-link to="/login" class="nav-item nav-link Header__link" active-class="active">Already have an account?</router-link>
+</div>

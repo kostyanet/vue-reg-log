@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import login from './modules/login.store';
+import login from './modules/login/login.store';
 
 Vue.use(Vuex);
 

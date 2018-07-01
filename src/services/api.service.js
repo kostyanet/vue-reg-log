@@ -53,12 +53,12 @@ class ApiService {
     const res = err.response;
     window.console.error(`APIService: ${res.status} ${res.statusText} - ${res.data.message}`);
 
-    throw new Error(res.data.message);
+    throw new Error(res.data.message || res.statusText);
   };
 
 
   _config() {
-    const { API_KEY, API_URL, APPLICATION_ID } = appConfig;
+    const { app: { API_KEY, API_URL, APPLICATION_ID } } = appConfig;
 
     this.api = axios.create({
       baseURL: [API_URL, APPLICATION_ID, API_KEY].join('/')

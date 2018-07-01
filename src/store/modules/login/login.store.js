@@ -1,7 +1,7 @@
 import apiService from '@/services/api.service';
-import appConfig from '../../misc/app.config';
-import AuthDataService from '../../services/auth-data.service';
-import router from '../../router';
+import appConfig from '../../../misc/app.config';
+import AuthDataService from '../../../services/auth-data.service';
+import router from '../../../router/index';
 import {CLEAR_AUTH_DATA, CLEAR_ERROR_MESSAGE, SUBMIT_LOGIN} from './action.types';
 
 const state = {
@@ -42,10 +42,6 @@ const mutations = {
   loginPending(state, isPending = true) {
     state.isPending = isPending;
   },
-
-  // loginSuccess(state, authData) {
-  //
-  // },
 
   loginFailure(state, error) {
     state.errorMessage = error.message;
