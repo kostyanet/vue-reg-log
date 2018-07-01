@@ -1,7 +1,7 @@
 export default class AuthDataService {
 
   static get token() {
-    let token = '';
+    let token;
 
     try {
       const tokenStr = localStorage.getItem('authData') || sessionStorage.getItem('authData');

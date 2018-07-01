@@ -1,4 +1,5 @@
 import apiService from '@/services/api.service';
+import appConfig from '../../misc/app.config';
 import AuthDataService from '../../services/auth-data.service';
 import router from '../../router';
 import {CLEAR_AUTH_DATA, CLEAR_ERROR_MESSAGE, SUBMIT_LOGIN} from './action.types';
@@ -20,11 +21,11 @@ const actions = {
   [SUBMIT_LOGIN]({ commit }, data, keepLogged) {
     commit('loginPending');
 
-    return apiService.post({ query: '/users/login', data })
+    return apiService.post({ query: appConfig.path.LOGIN, data })
       .then((response) => {
         commit('loginPending', false);
         AuthDataService.saveAuthData(response.data, keepLogged);
-        router.push({ path: '/protected' });
+        router.push({ path: appConfig.routes.PROTECTED });
       })
       .catch((error) => {
         commit('loginPending', false);

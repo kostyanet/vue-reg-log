@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import AuthDataService from './auth-data.service';
-import {API_KEY, API_URL, APPLICATION_ID} from '../misc/app.config';
+import appConfig from '../misc/app.config';
 import router from '../router';
 
 
@@ -35,7 +35,7 @@ class ApiService {
       data: data ? JSON.stringify(data) : null,
       headers: {
         'Content-Type': 'application/json',
-        'user-token': AuthDataService.token || null
+        'user-token': AuthDataService.token
       }
     };
 
@@ -58,13 +58,15 @@ class ApiService {
 
 
   _config() {
+    const { API_KEY, API_URL, APPLICATION_ID } = appConfig;
+
     this.api = axios.create({
       baseURL: [API_URL, APPLICATION_ID, API_KEY].join('/')
     });
 
     this.api.interceptors.response.use(null, function(error) {
       if (error && error.response && error.response.status === 401) {
-        router.push({ path: '/login' });
+        router.push({ path: appConfig.routes.LOGIN });
       }
 
       return Promise.reject(error);
