@@ -1,5 +1,5 @@
 <script>
-import {CLEAR_AUTH_DATA, CLEAR_ERROR_MESSAGE, SUBMIT_LOGIN} from '../../store/modules/login/action.types';
+import {CLEAR_AUTH_DATA, CLEAR_ERROR_MESSAGE, SUBMIT_LOGIN} from '@/store/modules/login/action.types';
 
 export default {
   name: 'LoginPage',

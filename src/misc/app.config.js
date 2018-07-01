@@ -13,7 +13,7 @@ const appConfig = {
   routes: {
     HOME: '/',
     LOGIN: '/login',
-    REGISTER: '/register',
+    REGISTER: '/registration',
     PROTECTED: '/protected'
   }
 

@@ -1,16 +1,19 @@
 <script>
-// import {CLEAR_AUTH_DATA, CLEAR_ERROR_MESSAGE, SUBMIT_LOGIN} from '../../store/modules/action.types';
-
 import {Validator} from 'vee-validate';
+import {CLEAR_ERROR_MESSAGE, SUBMIT_USER} from '@/store/modules/registration/action.types';
+
+// todo: route transitions
+// todo: canLeave guard
+// todo: success modal --> redirect to login
 
 export default {
   name: 'RegisterPage',
   data() {
     return {
-      email: '',
-      login: '',
-      password: '',
-      password2: '',
+      email: 'qwe@qw.qw',
+      login: 'kostya',
+      password: 'kostyanet',
+      password2: 'kostyanet',
       errors: null
     };
   },
@@ -20,17 +23,16 @@ export default {
       email: 'required|email',
       login: 'required|alpha|min:3|max:30',
       password: 'required|min:8|max:30',
-      password2: { required: true, confirmed: 'password' }
     });
 
     this.$set(this, 'errors', this.validator.errors);
   },
   computed: {
     errorMessage() {
-      return null // this.$store.state.register.errorMessage;
+      return this.$store.state.registration.errorMessage;
     },
     isLoading() {
-      return null // this.$store.state.login.isPending;
+      return this.$store.state.registration.isPending;
     }
   },
   methods: {
@@ -40,24 +42,24 @@ export default {
         login: this.login,
         password: this.password,
         password2: this.password2
-      }).then((result) => {
-        if (result) {
-          // eslint-disable-next-line
-          console.log('All is well', result);
-          return;
-        }
-        // eslint-disable-next-line
-        console.log('Oops!', this);
-      });
+      }).then((isValid) => {
+        const isPassCopyOk = this.password === this.password2;
 
-      // this.$store.dispatch(`register/${SUBMIT_LOGIN}`, {
-      //   login: this.login,
-      //   password: this.password,
-      // }, this.keepLogged);
+        if (!isPassCopyOk) {
+          this.errors.add({ field: 'password2', msg: 'The password confirmation does not match.' });
+
+        } else if (isPassCopyOk && isValid) {
+          this.$store.dispatch(`registration/${SUBMIT_USER}`, {
+            email: this.email,
+            name: this.login,
+            password: this.password
+          });
+        }
+      });
     },
     clearErrors() {
       this.errors.clear();
-      // this.$store.dispatch(`login/${CLEAR_ERROR_MESSAGE}`);
+      this.$store.dispatch(`registration/${CLEAR_ERROR_MESSAGE}`);
     }
   }
 };

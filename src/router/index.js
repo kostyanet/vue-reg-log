@@ -5,7 +5,7 @@ import AuthDataService from '../services/auth-data.service';
 import HomePage from '@/modules/home/HomePage';
 import LoginPage from '@/modules/login/LoginPage';
 import ProtectedPage from '@/modules/protected/ProtectedPage';
-import RegisterPage from '@/modules/register/RegisterPage';
+import RegisterPage from '@/modules/registration/RegisterPage';
 
 import appConfig from '../misc/app.config';
 

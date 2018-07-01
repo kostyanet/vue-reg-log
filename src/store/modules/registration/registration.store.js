@@ -1,8 +1,7 @@
 import apiService from '@/services/api.service';
 import appConfig from '../../../misc/app.config';
-import AuthDataService from '../../../services/auth-data.service';
 import router from '../../../router/index';
-import {CLEAR_AUTH_DATA, CLEAR_ERROR_MESSAGE, SUBMIT_LOGIN} from './action.types';
+import {CLEAR_ERROR_MESSAGE, SUBMIT_USER} from './action.types';
 
 const state = {
   isPending: false,
@@ -10,26 +9,21 @@ const state = {
 };
 
 const actions = {
-  [CLEAR_AUTH_DATA]() {
-    AuthDataService.clearAuthData();
-  },
-
   [CLEAR_ERROR_MESSAGE]({ commit }) {
     commit('clearErrorMessage');
   },
 
-  [SUBMIT_LOGIN]({ commit }, data, keepLogged) {
-    commit('loginPending');
+  [SUBMIT_USER]({ commit }, data) {
+    commit('signupPending');
 
-    return apiService.post({ query: appConfig.path.LOGIN, data })
-      .then((response) => {
-        commit('loginPending', false);
-        AuthDataService.saveAuthData(response.data, keepLogged);
-        router.push({ path: appConfig.routes.PROTECTED });
+    return apiService.post({ query: appConfig.path.REGISTER, data })
+      .then(() => {
+        commit('signupPending', false);
+        router.push({ path: appConfig.routes.HOME });
       })
       .catch((error) => {
-        commit('loginPending', false);
-        commit('loginFailure', error);
+        commit('signupPending', false);
+        commit('signupFailure', error);
       });
   }
 };
@@ -39,11 +33,11 @@ const mutations = {
     state.errorMessage = '';
   },
 
-  loginPending(state, isPending = true) {
+  signupPending(state, isPending = true) {
     state.isPending = isPending;
   },
 
-  loginFailure(state, error) {
+  signupFailure(state, error) {
     state.errorMessage = error.message;
   }
 };

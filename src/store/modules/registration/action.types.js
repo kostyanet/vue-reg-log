@@ -1,0 +1,2 @@
+export const SUBMIT_USER = 'SUBMIT_USER';
+export const CLEAR_ERROR_MESSAGE = 'CLEAR_ERROR_MESSAGE';
