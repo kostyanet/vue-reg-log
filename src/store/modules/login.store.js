@@ -23,8 +23,8 @@ const actions = {
     return apiService.post({ query: '/users/login', data })
       .then((response) => {
         commit('loginPending', false);
-        router.push({ name: 'ProtectedPage' });
-        AuthDataService.saveAuthData(response, keepLogged);
+        AuthDataService.saveAuthData(response.data, keepLogged);
+        router.push({ path: '/protected' });
       })
       .catch((error) => {
         commit('loginPending', false);

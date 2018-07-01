@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+
+import AuthDataService from '../services/auth-data.service';
 import HomePage from '@/modules/home/HomePage';
 import LoginPage from '@/modules/login/LoginPage';
 import ProtectedPage from '@/modules/protected/ProtectedPage';
@@ -19,7 +21,10 @@ export default new Router({
     }, {
       path: '/protected',
       name: 'ProtectedPage',
-      component: ProtectedPage
+      component: ProtectedPage,
+      beforeEnter(to, from, next) {
+        AuthDataService.token ? next() : next('/login');
+      }
     }, {
       path: '*',
       redirect: { name: 'HomePage' }

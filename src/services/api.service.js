@@ -1,14 +1,13 @@
 import axios from 'axios';
+
 import AuthDataService from './auth-data.service';
 import {API_KEY, API_URL, APPLICATION_ID} from '../misc/app.config';
+import router from '../router';
+
 
 class ApiService {
 
   constructor() {
-    this.api = axios.create({
-      baseURL: [API_URL, APPLICATION_ID, API_KEY].join('/')
-    });
-
     this._config();
   }
 
@@ -30,7 +29,7 @@ class ApiService {
 
 
   _http({ method, query, data }) {
-    return this.api({
+    const options = {
       method,
       url: query,
       data: data ? JSON.stringify(data) : null,
@@ -38,8 +37,9 @@ class ApiService {
         'Content-Type': 'application/json',
         'user-token': AuthDataService.token || null
       }
-    })
-      .catch(this._handleError);
+    };
+
+    return this.api(options).catch(this._handleError);
   }
 
 
@@ -58,18 +58,13 @@ class ApiService {
 
 
   _config() {
-    this.api.interceptors.request.use(function(config) {
-      if (config.data instanceof FormData) {
-        config.headers = Object.assign(config.headers, { 'Content-Type': 'application/json' });
-      }
-
-      return config;
-    }, null);
+    this.api = axios.create({
+      baseURL: [API_URL, APPLICATION_ID, API_KEY].join('/')
+    });
 
     this.api.interceptors.response.use(null, function(error) {
       if (error && error.response && error.response.status === 401) {
-        // unauthorized
-        // todo
+        router.push({ path: '/login' });
       }
 
       return Promise.reject(error);

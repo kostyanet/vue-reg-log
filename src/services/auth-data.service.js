@@ -5,7 +5,7 @@ export default class AuthDataService {
 
     try {
       const tokenStr = localStorage.getItem('authData') || sessionStorage.getItem('authData');
-      token = tokenStr && JSON.parse()['access_token'];
+      token = tokenStr && JSON.parse(tokenStr)['user-token'];
     } catch (e) {
       console.error('Token parser', e);
     }
