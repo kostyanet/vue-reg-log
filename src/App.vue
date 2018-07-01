@@ -2,7 +2,9 @@
   <div id="app" class="d-flex flex-column">
     <Header></Header>
     <main>
-      <router-view/>
+      <transition>
+        <router-view/>
+      </transition>
     </main>
   </div>
 </template>

@@ -2,7 +2,6 @@
 import {Validator} from 'vee-validate';
 import {CLEAR_ERROR_MESSAGE, SUBMIT_USER} from '@/store/modules/registration/action.types';
 
-// todo: route transitions
 // todo: canLeave guard
 // todo: success modal --> redirect to login
 
@@ -33,6 +32,13 @@ export default {
     },
     isLoading() {
       return this.$store.state.registration.isPending;
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.email || this.login || this.password) {
+      next();
+    } else {
+      next();
     }
   },
   methods: {

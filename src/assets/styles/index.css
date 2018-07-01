@@ -15,3 +15,11 @@ html {
 #app {
   /*color: red !important;*/
 }
+
+/* router transition animation */
+.v-enter-active, .v-leave-active {
+  transition: opacity .25s;
+}
+.v-enter, .v-leave-to {
+  opacity: 0;
+}
